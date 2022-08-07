@@ -21,6 +21,10 @@ public class UsuarioVO {
         this.id_rol = id_rol;
     }
 
+    public UsuarioVO() {
+    }
+
+
     public String getId_usuario() {
         return id_usuario;
     }
@@ -69,9 +73,7 @@ public class UsuarioVO {
         this.id_rol = id_rol;
     }
      
-    public UsuarioVO() {
-    }
-
+    
     
 
     

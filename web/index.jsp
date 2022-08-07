@@ -4,6 +4,9 @@
     Author     : 57314
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="ModeloDAO.UsuarioDAO"%>
+<%@page import="ModeloVO.UsuarioVO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,11 +26,12 @@
                     </div>
                     <div>
                         <label>Contraseña</label>
-                        <input type="text" name="usuario_password">
+                        <input type="password" name="usuario_password">
                     </div>
                     <div>
+                        
                         <button>Iniciar</button>
-                        <input type="hidden" value="1" name="valor">
+                        <input type="hidden" value="1" name="valor" >
                     </div>
 
                 </form>

@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +31,10 @@ public class UsuarioDAO extends ConexionBd implements Crud{
     private String sql;
 
     private String id_usuario = "", usuario_nombre = "", usuario_apellido="", usuario_password = "", usuario_estado="", id_rol="";
+    
+    public UsuarioDAO(){
+    
+    }
 
     //2. Metodo principal para recibir datos del VO
     public UsuarioDAO(UsuarioVO usuVO) {
@@ -42,6 +47,9 @@ public class UsuarioDAO extends ConexionBd implements Crud{
             id_usuario = usuVO.getId_usuario();
             usuario_nombre = usuVO.getUsuario_nombre();
             usuario_password = usuVO.getUsuario_password();
+            usuario_apellido = usuVO.getUsuario_apellido();
+            usuario_estado = usuVO.getUsuario_estado();
+            id_rol = usuVO.getId_rol();
 
         } catch (Exception e) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -126,14 +134,14 @@ public class UsuarioDAO extends ConexionBd implements Crud{
     }
     
 
-    public boolean inicioSesion(String usuario_nombre, String usuario_password, String id_rol) {
+    public boolean inicioSesion(String usuario_nombre, String usuario_password) {
         try {
             conexion = this.obtenerConexion();
-            sql = "call login(?,?,?)";
+            sql = "CALL Login(?,?)";
             puente = conexion.prepareStatement(sql);
             puente.setString(1, usuario_nombre);
             puente.setString(2, usuario_password);
-            puente.setString(3, id_rol);
+            
             mensajero = puente.executeQuery();
             if (mensajero.next()) {
                 operacion = true;
@@ -148,6 +156,36 @@ public class UsuarioDAO extends ConexionBd implements Crud{
             }
         }
         return operacion;
+    }
+    
+    public ArrayList<UsuarioVO> listar(String username){
+    
+        ArrayList<UsuarioVO> listaRol = new ArrayList<>();
+        
+        try {
+            conexion = this.obtenerConexion();
+            sql ="Call ListaRol(?)";
+            puente = conexion.prepareStatement(sql);
+            puente.setString(1, username);
+            mensajero = puente.executeQuery();
+            
+            while(mensajero.next()){
+                UsuarioVO usuVO = new UsuarioVO(mensajero.getString(1), mensajero.getString(2), 
+                        mensajero.getString(3), mensajero.getString(4), mensajero.getString(5), mensajero.getString(6));
+                
+                listaRol.add(usuVO);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, e);
+        }finally{
+            try {
+                this.deneterConexion();
+                
+            } catch (SQLException e) {
+                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        return listaRol;
     }
     
 }
