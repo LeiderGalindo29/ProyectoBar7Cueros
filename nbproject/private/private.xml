@@ -3,10 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/alrod/OneDrive/Documents/NetBeansProjects/BarSevenCueros/src/java/ModeloDAO/UsuarioDAO.java</file>
-            <file>file:/C:/Users/alrod/OneDrive/Documents/NetBeansProjects/BarSevenCueros/src/java/Controlador/UsuarioControlador.java</file>
-            <file>file:/C:/Users/alrod/OneDrive/Documents/NetBeansProjects/BarSevenCueros/web/index.jsp</file>
-            <file>file:/C:/Users/alrod/OneDrive/Documents/NetBeansProjects/BarSevenCueros/src/java/Util/ConexionBd.java</file>
+            <file>file:/C:/Users/Leider/Documents/Nueva%20carpeta%20(2)/BarSevenCueros/web/index.jsp</file>
+            <file>file:/C:/Users/Leider/Documents/Nueva%20carpeta%20(2)/BarSevenCueros/src/java/ModeloVO/ProductoVO.java</file>
+            <file>file:/C:/Users/Leider/Documents/Nueva%20carpeta%20(2)/BarSevenCueros/src/java/Controlador/ClienteControlador.java</file>
+            <file>file:/C:/Users/Leider/Documents/Nueva%20carpeta%20(2)/BarSevenCueros/src/java/Controlador/ProductoControlador.java</file>
+            <file>file:/C:/Users/Leider/Documents/Nueva%20carpeta%20(2)/BarSevenCueros/web/GenerarVenta.jsp</file>
+            <file>file:/C:/Users/Leider/Documents/Nueva%20carpeta%20(2)/BarSevenCueros/src/java/ModeloDAO/PedidoDAO.java</file>
+            <file>file:/C:/Users/Leider/Documents/Nueva%20carpeta%20(2)/BarSevenCueros/web/cliente.jsp</file>
+            <file>file:/C:/Users/Leider/Documents/Nueva%20carpeta%20(2)/BarSevenCueros/src/java/ModeloDAO/MesaDAO.java</file>
+            <file>file:/C:/Users/Leider/Documents/Nueva%20carpeta%20(2)/BarSevenCueros/src/java/ModeloDAO/ProductoDAO.java</file>
+            <file>file:/C:/Users/Leider/Documents/Nueva%20carpeta%20(2)/BarSevenCueros/src/java/Controlador/PedidoControlador.java</file>
         </group>
     </open-files>
 </project-private>

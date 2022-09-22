@@ -10,11 +10,11 @@ package ModeloVO;
  * @David
  */
 public class RolVO {
-    private String id_rol, rol_tipo;
+    private String id_rol, tipo_rol;
 
-    public RolVO(String id_rol, String rol_tipo) {
+    public RolVO(String id_rol, String tipo_rol) {
         this.id_rol = id_rol;
-        this.rol_tipo = rol_tipo;
+        this.tipo_rol = tipo_rol;
     }
 
     public RolVO() {
@@ -28,13 +28,15 @@ public class RolVO {
         this.id_rol = id_rol;
     }
 
-    public String getRol_tipo() {
-        return rol_tipo;
+    public String getTipo_rol() {
+        return tipo_rol;
     }
 
-    public void setRol_tipo(String rol_tipo) {
-        this.rol_tipo = rol_tipo;
+    public void setTipo_rol(String tipo_rol) {
+        this.tipo_rol = tipo_rol;
     }
+
+    
     
     
 }

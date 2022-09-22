@@ -30,7 +30,7 @@ public class UsuarioDAO extends ConexionBd implements Crud{
     private boolean operacion = false;
     private String sql;
 
-    private String id_usuario = "", usuario_nombre = "", usuario_apellido="", usuario_password = "", usuario_estado="", id_rol="";
+    private String id_usuario = "", usuario_nombre = "", usuario_apellido="", usuario_password = "", usuario_estado="", id_rolFK="";
     
     public UsuarioDAO(){
     
@@ -49,7 +49,7 @@ public class UsuarioDAO extends ConexionBd implements Crud{
             usuario_password = usuVO.getUsuario_password();
             usuario_apellido = usuVO.getUsuario_apellido();
             usuario_estado = usuVO.getUsuario_estado();
-            id_rol = usuVO.getId_rol();
+            id_rolFK = usuVO.getId_rolFK();
 
         } catch (Exception e) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -61,11 +61,13 @@ public class UsuarioDAO extends ConexionBd implements Crud{
     public boolean agregarRegistro() {
 
         try {
-            sql = "insert into usuario(usuario_nombre,usuario_password) values (?,?)";
+            sql = "CALL newUser(?,?,?,?,?)";
             puente = conexion.prepareStatement(sql);
             puente.setString(1, usuario_nombre);
-            puente.setString(2, usuario_password);
-            puente.setString(3, id_rol);
+            puente.setString(2, usuario_apellido);
+            puente.setString(3, usuario_password);
+            puente.setString(4, usuario_estado);
+            puente.setString(5, id_rolFK);
             puente.executeUpdate();
             operacion = true;
 
@@ -90,7 +92,7 @@ public class UsuarioDAO extends ConexionBd implements Crud{
             puente = conexion.prepareStatement(sql);
             puente.setString(1, usuario_nombre);
             puente.setString(2, usuario_password);
-            puente.setString(3, id_rol);
+            puente.setString(3, id_rolFK);
             puente.executeUpdate();
             operacion = true;
 
@@ -115,7 +117,7 @@ public class UsuarioDAO extends ConexionBd implements Crud{
             puente = conexion.prepareStatement(sql);
             puente.setString(1, usuario_nombre);
             puente.setString(2, usuario_password);
-            puente.setString(3, id_rol);
+            puente.setString(3, id_rolFK);
             puente.executeUpdate();
             operacion = true;
 
@@ -134,14 +136,13 @@ public class UsuarioDAO extends ConexionBd implements Crud{
     }
     
 
-    public boolean inicioSesion(String usuario_nombre, String usuario_password) {
+   public boolean inicioSesion(String usuario_nombre, String usuario_password) {
         try {
             conexion = this.obtenerConexion();
-            sql = "CALL Login(?,?)";
+            sql = "CALL login(?,?)";
             puente = conexion.prepareStatement(sql);
             puente.setString(1, usuario_nombre);
             puente.setString(2, usuario_password);
-            
             mensajero = puente.executeQuery();
             if (mensajero.next()) {
                 operacion = true;
@@ -158,34 +159,30 @@ public class UsuarioDAO extends ConexionBd implements Crud{
         return operacion;
     }
     
-    public ArrayList<UsuarioVO> listar(String username){
-    
-        ArrayList<UsuarioVO> listaRol = new ArrayList<>();
-        
-        try {
-            conexion = this.obtenerConexion();
-            sql ="Call ListaRol(?)";
-            puente = conexion.prepareStatement(sql);
-            puente.setString(1, username);
-            mensajero = puente.executeQuery();
-            
-            while(mensajero.next()){
-                UsuarioVO usuVO = new UsuarioVO(mensajero.getString(1), mensajero.getString(2), 
-                        mensajero.getString(3), mensajero.getString(4), mensajero.getString(5), mensajero.getString(6));
-                
-                listaRol.add(usuVO);
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, e);
-        }finally{
+   public ArrayList<UsuarioVO> listar(){
+       ArrayList<UsuarioVO> listarUsuario = new ArrayList<>();
+       
+       try {
+           conexion = this.obtenerConexion();
+           sql="call listarUsuario";
+           puente = conexion.prepareStatement(sql);
+           mensajero = puente.executeQuery();
+           while (mensajero.next()) {                    
+                    UsuarioVO usuVO = new UsuarioVO(mensajero.getString(1), mensajero.getString(2),mensajero.getString(3),mensajero.getString(4),mensajero.getString(5),
+                            mensajero.getString(6));
+                    listarUsuario.add(usuVO);
+                }
+           
+       } catch (SQLException e) {
+           Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, e);
+       }finally {
             try {
                 this.deneterConexion();
-                
-            } catch (SQLException e) {
-                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, e);
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return listaRol;
-    }
+       return listarUsuario;
+   }
     
 }

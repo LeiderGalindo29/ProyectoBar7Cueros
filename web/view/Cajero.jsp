@@ -13,5 +13,7 @@
     </head>
     <body>
         <h1>Cajero</h1>
+        
+        <button> <a href="../BarSevenCueros/producto.jsp">Administrar Producto</a></button>
     </body>
 </html>

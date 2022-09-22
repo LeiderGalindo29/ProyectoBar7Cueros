@@ -27,24 +27,23 @@ public class PedidoDAO extends ConexionBd implements Crud{
     private boolean operacion = false;
     private String sql;
 
-    private String id_pedido = "", id_usuarioFK = "", id_mesaFK = "", id_clienteFK = "", pedido_estado = "", producto_cantidad = "", productos_nombre = "", valor_pedido = "", metodo_pago = "";
+    private String id_pedido = "", id_usuarioFK = "",clienteFK = "",mesaFK="",sub_total="",metodo_pago="",fecha="", pedido_estado = "";
 
     public PedidoDAO(PedidoVO pedVO) {
 
         super();
         try {
-            conexion = this.deneterConexion();
+            conexion = this.obtenerConexion();
             id_pedido = pedVO.getId_pedido();
             id_usuarioFK = pedVO.getId_usuarioFK();
-            id_mesaFK = pedVO.getId_mesaFK();
-            id_clienteFK = pedVO.getId_clienteFK();
-            pedido_estado = pedVO.getPedido_estado();
-            producto_cantidad = pedVO.getProducto_cantidad();
-            productos_nombre = pedVO.getProductos_nombre();
-            valor_pedido = pedVO.getValor_pedido();
+            clienteFK = pedVO.getClienteFK();
+            mesaFK = pedVO.getMesaFK();
+            sub_total = pedVO.getMesaFK();
             metodo_pago = pedVO.getMetodo_pago();
+            fecha = pedVO.getFecha();
+            pedido_estado = pedVO.getPedido_estado();
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         
@@ -52,13 +51,22 @@ public class PedidoDAO extends ConexionBd implements Crud{
         
     }
 
+    public PedidoDAO() {
+    }
+    
+
     @Override
     public boolean agregarRegistro() {
         try {
-            
-            sql="insert";
+            conexion = this.obtenerConexion();
+            sql="call registrarPedido(?,?,?,?,?,?)";
             puente = conexion.prepareStatement(sql);
-            puente.setString(1, id_pedido);
+            puente.setString(1, id_usuarioFK);
+            puente.setString(2, clienteFK);
+            puente.setString(3, mesaFK);
+            puente.setString(4, sub_total);
+            puente.setString(5, pedido_estado);
+            puente.setString(6, metodo_pago);
             
             puente.executeUpdate();
             operacion = true;        

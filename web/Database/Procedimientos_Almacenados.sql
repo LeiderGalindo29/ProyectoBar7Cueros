@@ -9,17 +9,36 @@
  */
 /*procedimientos almacenados*/
 
-/*LOGIN*/
-
-DELIMITER $$
-CREATE PROCEDURE `login`(IN `user_name` VARCHAR(30), IN `user_password` VARCHAR(30), IN `user_rol` INT)
-SELECT * FROM usuario
-WHERE usuario_nombre=user_name and usuario_password=user_password and id_rol=user_rol$$
-DELIMITER ;
-
 
 /*REGISTRAR_PRODUCTO*/
 
+/*iniciar sesion*/
+DELIMITER $$
+CREATE  PROCEDURE `login`(IN `user_name` VARCHAR(30), IN `user_password` VARCHAR(30))
+SELECT * FROM usuario
+WHERE usuario_nombre=user_name and usuario_password=user_password$$
+DELIMITER ;
+
+/*traer roles*/
+DELIMITER $$
+CREATE  PROCEDURE `ListaRol`(IN `username` VARCHAR(30))
+SELECT usuario.usuario_nombre, rol.tipo_rol FROM rol INNER JOIN usuario ON usuario.id_rolFK = rol.id_rol WHERE usuario.usuario_nombre=username$$
+DELIMITER ;
+
+/*nueva mesa*/
+DELIMITER $$
+CREATE  PROCEDURE `RegistroMesa`(IN `num_mesa` INT, IN `estado` INT)
+INSERT INTO `mesa` (`mesa_numero`, `mesa_estado`) VALUES (num_mesa, estado)$$
+DELIMITER ;
+
+/*nuevo usuario*/
+DELIMITER $$
+CREATE PROCEDURE `newUser`(IN `user_name` VARCHAR(30), IN `user_apellido` VARCHAR(30), IN `user_password` INT, IN `user_estado` INT(1), IN `rol_fk` INT(1))
+INSERT INTO `usuario` (`usuario_nombre`, `usuario_apellido`, `usuario_password`, `usuario_estado`, `id_rolFK`) 
+VALUES (user_name, user_apellido, user_password, user_estado, rol_fk)$$
+DELIMITER ;
+
+/*nuevo producto*/
 DELIMITER $$
 CREATE PROCEDURE `Registrar_Producto`(IN `nom_prod` VARCHAR(30), IN `precio_prod` DOUBLE, IN `prod_estado` INT)
 INSERT INTO producto(producto_nombre, producto_precio, producto_estado) VALUES (nom_prod,precio_prod,prod_estado)$$
@@ -31,18 +50,5 @@ CREATE PROCEDURE `Select_Productos`()
 SELECT * FROM producto$$
 DELIMITER ;
 
-/*REGISTRAR MESA*/
-
-DELIMITER $$
-CREATE PROCEDURE `Registrar_Mesa`(IN `num_mesa` INT, IN `estado_mesa` INT)
-INSERT INTO mesa(mesa_numero, mesa_estado) VALUES (num_mesa ,estado_mesa)$$
-DELIMITER ;
 
 
-/*Registrar Cliente*/
-
-DELIMITER $$
-CREATE PROCEDURE `Registrar_Cliente`(IN `num_doc` INT, IN `cliente_nombre` VARCHAR(30), IN `cliente_apellido` VARCHAR(30), IN `cliente_estado` INT, IN `cliente_correo` VARCHAR(30), IN `fecha_nac` DATE, IN `tipo_doc` INT)
-INSERT INTO cliente(numero_documento, cliente_nombre, cliente_apellido, cliente_estado, cliente_corrreo, fecha_nacimiento, tipo_documento) 
-VALUES (num_doc,cliente_nombre,cliente_apellido,cliente_estado,cliente_correo,fecha_nac,tipo_doc)$$
-DELIMITER ;

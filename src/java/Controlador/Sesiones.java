@@ -37,7 +37,7 @@ public class Sesiones extends HttpServlet {
         
         HttpSession miSesion = request.getSession();
 
-        miSesion.removeAttribute("datos");
+        miSesion.removeAttribute("datosUsuario");
         miSesion.invalidate();
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }

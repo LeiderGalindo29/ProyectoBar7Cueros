@@ -4,6 +4,9 @@
     Author     : alrod
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="ModeloDAO.ClienteDAO"%>
+<%@page import="ModeloVO.ClienteVO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -49,5 +52,7 @@
         <%} else {%>
         ${mensajeExito}        
         <%}%>
+        
+        
     </body>
 </html>

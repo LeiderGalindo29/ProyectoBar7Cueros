@@ -10,13 +10,14 @@ package ModeloVO;
  * @author David
  */
 public class ProductoVO {
-    private String id_producto, producto_nombre, producto_precio, producto_estado;
+    private String id_producto, producto_nombre, producto_precio, producto_estado, producto_cantidad;
 
-    public ProductoVO(String id_producto, String producto_nombre, String producto_precio, String producto_estado) {
+    public ProductoVO(String id_producto, String producto_nombre, String producto_precio, String producto_estado, String producto_cantidad) {
         this.id_producto = id_producto;
         this.producto_nombre = producto_nombre;
         this.producto_precio = producto_precio;
         this.producto_estado = producto_estado;
+        this.producto_cantidad = producto_cantidad;
     }
 
     public ProductoVO() {
@@ -53,5 +54,14 @@ public class ProductoVO {
     public void setProducto_estado(String producto_estado) {
         this.producto_estado = producto_estado;
     }
+
+    public String getProducto_cantidad() {
+        return producto_cantidad;
+    }
+
+    public void setProducto_cantidad(String producto_cantidad) {
+        this.producto_cantidad = producto_cantidad;
+    }
+
     
 }

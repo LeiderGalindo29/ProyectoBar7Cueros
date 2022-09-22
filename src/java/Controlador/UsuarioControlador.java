@@ -5,10 +5,13 @@
  */
 package Controlador;
 
+import ModeloDAO.RolDAO;
 import ModeloDAO.UsuarioDAO;
+import ModeloVO.RolVO;
 import ModeloVO.UsuarioVO;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,42 +43,53 @@ public class UsuarioControlador extends HttpServlet {
         String usuario_apellido = request.getParameter("usuario_apellido");
         String usuario_estado = request.getParameter("usuario_estado");
         String id_usuario = request.getParameter("id_usuario");
-        String id_rol = request.getParameter("rol");
+        String id_rolFK = request.getParameter("rol");
 
         int valor = Integer.parseInt(request.getParameter("valor"));
 
-        UsuarioVO usuVO = new UsuarioVO(id_usuario, usuario_nombre, usuario_apellido, usuario_password, usuario_estado, id_rol);
+        UsuarioVO usuVO = new UsuarioVO(id_usuario, usuario_nombre, usuario_apellido, usuario_password, usuario_estado, id_rolFK);
 
         UsuarioDAO usuDAO = new UsuarioDAO(usuVO);
 
         switch (valor) {
             case 1://Iniciar sesión
+
                 if (usuDAO.inicioSesion(usuario_nombre, usuario_password)) {
-                    HttpSession sesion = request.getSession(true);
-                    usuVO = new UsuarioVO(id_usuario, usuario_nombre, usuario_apellido, usuario_password, usuario_estado, id_rol);
-                    sesion.setAttribute("datos", usuVO);
-                    
-                    
-                    usuDAO = new UsuarioDAO();
-                    usuVO = new UsuarioVO();
+                    HttpSession misesion = request.getSession(true);
+                    usuVO = new UsuarioVO(id_usuario, usuario_nombre, usuario_apellido, usuario_password, usuario_estado, id_rolFK);
+                    misesion.setAttribute("datosUsuario", usuVO);
 
-                    ArrayList<UsuarioVO> listaRol = usuDAO.listar(usuario_nombre);
+                    RolDAO rolDAO = new RolDAO();
+                    RolVO rolVO = new RolVO();
+
+                    ArrayList<RolVO> listaRol = rolDAO.listar(usuario_nombre);
                     for (int i = 0; i < listaRol.size(); i++) {
-                        usuVO = listaRol.get(i);
+                        rolVO = listaRol.get(i);
                     }
-                    String rolTipo = usuVO.getId_rol();
+                    String roltipo = rolVO.getTipo_rol();
 
-                    if (rolTipo.equals("1")) {
+                    if (roltipo.equals("Administrador")) {
                         request.getRequestDispatcher("view/Administrador.jsp").forward(request, response);
-                    } else if (rolTipo.equals("2")) {
-                        request.getRequestDispatcher("view/Mesero.jsp").forward(request, response);
-                    } else if (rolTipo.equals("3")) {
+                    } else if (roltipo.equals("Cajero")) {
                         request.getRequestDispatcher("view/Cajero.jsp").forward(request, response);
+                    } else if (roltipo.equals("Mesero")) {
+                        request.getRequestDispatcher("view/Mesero.jsp").forward(request, response);
                     }
                 } else {
-                    request.setAttribute("Error", "Datos Incorrectos");
+                    request.setAttribute("Error", "¡Por favor, verifique sus datos de acceso!");
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 }
+
+                break;
+                
+                case 2: //Agregar Registro
+                 
+                if (usuDAO.agregarRegistro()) {
+                    request.setAttribute("Exito", "El usuario se registro correctamente");
+                } else {
+                    request.setAttribute("Error", "El usuario NO se registro correctamente");
+                }
+                request.getRequestDispatcher("newUser.jsp").forward(request, response);
                 break;
         }
     }

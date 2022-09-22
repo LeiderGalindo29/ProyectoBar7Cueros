@@ -10,20 +10,19 @@ package ModeloVO;
  * David
  */
 public class UsuarioVO {
-     private String id_usuario, usuario_nombre, usuario_apellido, usuario_password, usuario_estado, id_rol;
+     private String id_usuario, usuario_nombre, usuario_apellido, usuario_password, usuario_estado, id_rolFK;
 
-    public UsuarioVO(String id_usuario, String usuario_nombre, String usuario_apellido, String usuario_password, String usuario_estado, String id_rol) {
+    public UsuarioVO(String id_usuario, String usuario_nombre, String usuario_apellido, String usuario_password, String usuario_estado, String id_rolFK) {
         this.id_usuario = id_usuario;
         this.usuario_nombre = usuario_nombre;
         this.usuario_apellido = usuario_apellido;
         this.usuario_password = usuario_password;
         this.usuario_estado = usuario_estado;
-        this.id_rol = id_rol;
+        this.id_rolFK = id_rolFK;
     }
 
     public UsuarioVO() {
     }
-
 
     public String getId_usuario() {
         return id_usuario;
@@ -65,14 +64,16 @@ public class UsuarioVO {
         this.usuario_estado = usuario_estado;
     }
 
-    public String getId_rol() {
-        return id_rol;
+    public String getId_rolFK() {
+        return id_rolFK;
     }
 
-    public void setId_rol(String id_rol) {
-        this.id_rol = id_rol;
+    public void setId_rolFK(String id_rolFK) {
+        this.id_rolFK = id_rolFK;
     }
-     
+
+
+    
     
     
 

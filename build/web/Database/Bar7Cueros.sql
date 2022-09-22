@@ -1,13 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- * Author:  alrod
- * Created: 3/08/2022
- */
-
 CREATE DATABASE BAR7CUEROS;
 
 USE BAR7CUEROS;
@@ -18,7 +8,7 @@ usuario_nombre VARCHAR(30),
 usuario_apellido VARCHAR(30),
 usuario_password VARCHAR(30),
 usuario_estado INT,
-id_rol INTEGER,
+id_rolFK INTEGER,
 PRIMARY KEY(id_usuario)
 );
 
@@ -29,8 +19,9 @@ id_usuarioFK INTEGER,
 id_mesaFK INTEGER,
 id_clienteFK INT,
 pedido_estado INT,
+producto_cantidad INTEGER,
+productos_nombre VARCHAR(30),
 valor_pedido DOUBLE,
-id_detalleFK INTEGER,
 metodo_pago INT,
 PRIMARY KEY(id_pedido)
 );
@@ -47,6 +38,7 @@ id_producto INTEGER AUTO_INCREMENT,
 producto_nombre VARCHAR(30) UNIQUE,
 producto_precio DOUBLE,
 producto_estado INT,
+producto_cantidad INT,
 PRIMARY KEY(id_producto)
 );
 
@@ -64,7 +56,7 @@ numero_documento INTEGER UNIQUE,
 cliente_nombre VARCHAR(30),
 cliente_apellido VARCHAR(30),
 cliente_estado INT,
-cliente_correo VARCHAR(30),
+cliente_corrreo VARCHAR(30) UNIQUE,
 fecha_nacimiento DATE,
 tipo_documento INT,
 PRIMARY KEY(id_cliente)
@@ -77,11 +69,14 @@ mesa_estado INT,
 PRIMARY KEY(id_mesa)
 );
 
-CREATE TABLE Detalle(
-id_detalle INTEGER AUTO_INCREMENT,
-producto_idFK INTEGER,
-PRIMARY KEY(id_detalle)
+CREATE TABLE Rol(
+id_rol INTEGER AUTO_INCREMENT,
+tipo_rol varchar(20),
+PRIMARY KEY(id_rol)
 );
+
+ALTER TABLE USUARIO ADD CONSTRAINT id_rolFK FOREIGN KEY(id_rolFK) REFERENCES ROL(id_rol);
+
 
 ALTER TABLE PEDIDO ADD CONSTRAINT id_usuarioFK FOREIGN KEY(id_usuarioFK) REFERENCES USUARIO(id_usuario);
 
@@ -95,9 +90,6 @@ ALTER TABLE DES_PEDIDO ADD CONSTRAINT id_productoFK FOREIGN KEY(id_productoFK) R
 
 ALTER TABLE DES_PEDIDO ADD CONSTRAINT pedidoFK FOREIGN KEY(pedidoFK) REFERENCES PEDIDO(id_pedido);
 
-ALTER TABLE Detalle ADD CONSTRAINT producto_idFK FOREIGN KEY(producto_idFK) REFERENCES Producto(id_producto);
-
-ALTER TABLE Pedido ADD CONSTRAINT id_detalleFK FOREIGN KEY(id_detalleFK) REFERENCES Detalle(id_detalle);
 
 DESCRIBE USUARIO;
 DESCRIBE PEDIDO;

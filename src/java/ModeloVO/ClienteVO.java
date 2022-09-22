@@ -12,7 +12,7 @@ package ModeloVO;
 public class ClienteVO {
     private String id_cliente, numero_documento, cliente_nombre, cliente_apellido, cliente_estado, cliente_correo, fecha_nacimiento, tipo_documento;
 
-    public ClienteVO(String id_cliente, String nnumero_documento, String cliente_nombre, String cliente_apellido, String cliente_estado, String cliente_correo, String fecha_nacimiento, String tipo_documento) {
+    public ClienteVO(String id_cliente, String numero_documento, String cliente_nombre, String cliente_apellido, String cliente_estado, String cliente_correo, String fecha_nacimiento, String tipo_documento) {
         this.id_cliente = id_cliente;
         this.numero_documento = numero_documento;
         this.cliente_nombre = cliente_nombre;
@@ -38,8 +38,8 @@ public class ClienteVO {
         return numero_documento;
     }
 
-    public void setNumero_documento(String nnumero_documento) {
-        this.numero_documento = nnumero_documento;
+    public void setNumero_documento(String numero_documento) {
+        this.numero_documento = numero_documento;
     }
 
     public String getCliente_nombre() {

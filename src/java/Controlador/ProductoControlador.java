@@ -39,11 +39,10 @@ public class ProductoControlador extends HttpServlet {
         String producto_nombre = request.getParameter("prod_nombre");
         String producto_precio = request.getParameter("prod_precio");
         String producto_estado = request.getParameter("prod_estado");
-        
+        String producto_cantidad = request.getParameter("prod_cant");
         int valor = Integer.parseInt(request.getParameter("valor"));
         
-        ProductoVO prodVO = new ProductoVO(id_producto, producto_nombre, producto_precio, producto_estado);
-        
+        ProductoVO prodVO = new ProductoVO(id_producto, producto_nombre, producto_precio, producto_estado, producto_cantidad);
         ProductoDAO prodDAO = new ProductoDAO(prodVO);
         
         
@@ -56,6 +55,17 @@ public class ProductoControlador extends HttpServlet {
                     request.setAttribute("mensajeError", "el producto NO se registro correctamente");
                 }
                 request.getRequestDispatcher("producto.jsp").forward(request, response);
+                break;
+            case 2://Consultar por Nombre
+                
+                prodVO = prodDAO.buscar(producto_nombre);
+                if (prodVO != null){
+                    request.setAttribute("consultaNombre", prodVO);
+                    request.getRequestDispatcher("GenerarVenta.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("mensajeError", "el producto no se pudo encontrar");
+                    request.getRequestDispatcher("GenerarVenta.jsp").forward(request, response);
+                }
                 break;
         }
         
